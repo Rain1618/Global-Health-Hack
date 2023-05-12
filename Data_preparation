@@ -1,0 +1,13 @@
+def clean_suicide(raw):
+  df = pd.melt(raw, id_vars=['Countries, territories and areas'], var_name='Year', value_name='Suicide rate')
+  df['Country'] = df['Countries, territories and areas'] + ', ' + df['Year']
+
+  # drop the original 'Country' and 'Year' columns
+  df = df.drop(['Countries, territories and areas', 'Year'], axis=1)
+
+  # rearrange the columns as needed
+  df = df[['Country', 'Suicide rate']]
+
+  #Clean up suicide rates
+  df['Suicide rate'] = df['Suicide rate'].apply(lambda x: x.split(' ')[0])
+  return df
